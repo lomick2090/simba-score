@@ -1,0 +1,12 @@
+
+
+.header {
+    padding: 30px 0;
+    background-color: black;
+    color: white;
+}
+
+.header ul {
+    display: flex;
+    justify-content: space-around;
+}
