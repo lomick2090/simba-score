@@ -10,16 +10,12 @@ export default function Mantra({mantra, index}) {
     const [userVote, setUserVote] = useState(0)
     const {localVotes, setLocalVotes, mantras} = useMantraContext()
     
-
-
-    
-
     useEffect(() => {
         setUserVote(localVotes[index])
-    }, [localVotes[index]])
+    }, [])
 
     async function pushVote(vote) {
-        const mantraRef = doc(db, 'mantras', mantras[index].id)
+        const mantraRef = doc(db, 'mantraTEST', mantras[index].id)
         const prevVotes = mantras[index]?.votes
         if (userVote == 0) {
             await updateDoc(mantraRef, {
@@ -32,7 +28,6 @@ export default function Mantra({mantra, index}) {
             })
         }
     }
-
     function handleVote(vote) {
         if (vote != userVote) {
             pushVote(vote)
@@ -41,8 +36,9 @@ export default function Mantra({mantra, index}) {
                 tempVotes[index] = vote
                 return tempVotes
             })
-            setUserVote(vote)
             localStorage.setItem('votes', JSON.stringify(localVotes))
+            setUserVote(vote)
+
         } 
     }
 
