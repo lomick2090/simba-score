@@ -1,10 +1,10 @@
 import Layout from "../components/Layout"
 import styles from "../styles/mantras.module.css"
 import { useMantraContext } from "../context/mantrasContext"
+import Link from "next/link"
 
 export default function Mantras() {
-    const mantras = useMantraContext()
-    
+    const {mantras} = useMantraContext()
     let rawMantraTags = []
     mantras.map(mantra => {
         mantra.tags.map(tag => {
@@ -21,7 +21,7 @@ export default function Mantras() {
         <Layout>
             <div className={styles.page}>
                 {mantraButtons}
-
+                <Link href='/random'><button className={styles.mantrabuttons}>Random</button></Link>
             </div>
         </Layout>
     )

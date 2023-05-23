@@ -7,17 +7,27 @@ const mantraRef = collection(db, 'mantras');
 
 function MantrasProvider({children}) {
   const [mantras, setMantras] = React.useState([])
+  const [localVotes, setLocalVotes] = React.useState([])
 
   React.useEffect(() => {
-    async function getMantras() {
+    async function initialize() {
         const rawMantraData = await getDocs(mantraRef)
-        const mantraList = rawMantraData.docs.map(mantra => (mantra.data()))
+        const mantraList = rawMantraData.docs.map(mantra => ({...mantra.data(), id: mantra.id}))
         setMantras(mantraList);
+
+        if (!localStorage.getItem('votes')) {
+            const initialVotes = mantraList.map(() => ( 0 ))
+            localStorage.setItem('votes', JSON.stringify(initialVotes))
+            setLocalVotes(initialVotes)
+        } else {
+            setLocalVotes(JSON.parse(localStorage.getItem('votes')))
+        }
     }
-    getMantras()
+
+    initialize()
   }, [])
 
-  return <MantrasContext.Provider value={mantras}>{children}</MantrasContext.Provider>
+  return <MantrasContext.Provider value={{mantras, localVotes, setLocalVotes}}>{children}</MantrasContext.Provider>
 }
 
 function useMantraContext() {
