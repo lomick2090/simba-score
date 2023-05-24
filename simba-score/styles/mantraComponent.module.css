@@ -4,7 +4,7 @@
     width: 250px;
     border-radius: 20px;
     text-align: center;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.027) , rgba(0, 0, 0, 0.315));
+    background-image: linear-gradient(to right, rgb(224, 224, 224) , rgb(168, 168, 168));
     box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.384)
 }
 

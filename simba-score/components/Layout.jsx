@@ -4,7 +4,7 @@ import styles from '../styles/layout.module.css'
 
 export default function Layout({children}) {
     return (
-        <div>
+        <div className={styles.home}>
             <div className={styles.header}>
                 <ul>
                     <Link href='/'>

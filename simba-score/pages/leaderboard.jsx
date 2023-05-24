@@ -7,15 +7,16 @@ export default function Leaderboard() {
     const {mantras} = useMantraContext()
     const sortedMantras = [...mantras].sort((a, b) => {return b.votes - a.votes } )
 
-    const mantraElements = sortedMantras.map((mantra, index) => {
-        return (
-            <div>
-                <h1># {index +1}</h1>
-                <Mantra key={index} mantra={mantra} index={index} />
+    const mantraElements = [];
+    for (let i = 0; i < 10; i++) {
+        mantraElements.push(
+            <div className={styles.leaderboardcomp}>
+                <h1># {i +1}</h1>
+                    <Mantra key={i} mantra={sortedMantras[i]} index={i} />
                 <hr />
             </div>
         )
-    })
+    }
     return (
         <Layout>
             <div className={styles.page}>
