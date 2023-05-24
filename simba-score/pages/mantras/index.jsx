@@ -1,6 +1,6 @@
-import Layout from "../components/Layout"
-import styles from "../styles/mantras.module.css"
-import { useMantraContext } from "../context/mantrasContext"
+import Layout from "../../components/Layout"
+import styles from "../../styles/mantras.module.css"
+import { useMantraContext } from "../../context/mantrasContext"
 import Link from "next/link"
 
 export default function Mantras() {
