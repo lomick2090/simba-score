@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
 }
 
 .mantrabuttons {
@@ -33,6 +32,7 @@
   touch-action: manipulation;
   vertical-align: top;
   white-space: nowrap;
+  margin-bottom:30px
 }
 
 .mantrabuttons:active,
@@ -53,4 +53,17 @@
   -1px 1px 0 rgb(255, 255, 255),
   -1px -1px 0 rgb(255, 255, 255),
   1px -1px 0 rgb(255, 255, 255);
+}
+
+.mantras {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 250px 250px 250px 250px 250px 250px 250px;
+  align-items: center;
+  justify-items: center;
+}
+
+.buttons {
+  grid-column: 0 / 4;
+  justify-self: center;
 }

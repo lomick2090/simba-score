@@ -9,13 +9,13 @@ import { doc, updateDoc, getDoc } from 'firebase/firestore'
 export default function Mantra({mantra, index}) {
     const [userVote, setUserVote] = useState(0)
     const {localVotes, setLocalVotes, mantras} = useMantraContext()
-
+    console.log(index)
     useEffect(() => {
         setUserVote(localVotes[index] || 0)
     }, [localVotes[index]])
 
     async function pushVote(vote) {
-        const mantraRef = doc(db, 'mantraTEST', mantras[index].id)
+        const mantraRef = doc(db, 'mantras', mantras[index].id)
         const prevVoteData = await getDoc(mantraRef)
         const prevVotes = prevVoteData.data().votes
         if (userVote == 0) {

@@ -3,7 +3,7 @@ import { db } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 
 const MantrasContext = React.createContext()
-const mantraRef = collection(db, 'mantraTEST');
+const mantraRef = collection(db, 'mantras');
 
 function MantrasProvider({children}) {
   const [mantras, setMantras] = React.useState([])
