@@ -4,19 +4,22 @@ import styles from '../styles/mantraComponent.module.css'
 import { useEffect, useState } from 'react'
 import { useMantraContext } from '../context/mantrasContext'
 import { db } from '../config/firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
 
 export default function Mantra({mantra, index}) {
     const [userVote, setUserVote] = useState(0)
     const {localVotes, setLocalVotes, mantras} = useMantraContext()
-    
+
+    console.log(localVotes[index])
+
     useEffect(() => {
-        setUserVote(localVotes[index])
-    }, [])
+        setUserVote(localVotes[index] || 0)
+    }, [localVotes[index]])
 
     async function pushVote(vote) {
         const mantraRef = doc(db, 'mantraTEST', mantras[index].id)
-        const prevVotes = mantras[index]?.votes
+        const prevVoteData = await getDoc(mantraRef)
+        const prevVotes = prevVoteData.data().votes
         if (userVote == 0) {
             await updateDoc(mantraRef, {
                 votes: (prevVotes + vote)
@@ -28,17 +31,17 @@ export default function Mantra({mantra, index}) {
             })
         }
     }
-    function handleVote(vote) {
+    async function handleVote(vote) {
         if (vote != userVote) {
-            pushVote(vote)
+            await pushVote(vote)
             setLocalVotes(prevVotes => {
-                const tempVotes =  [...prevVotes]
+                const tempVotes = [...prevVotes]
                 tempVotes[index] = vote
+                localStorage.setItem('votes', JSON.stringify(tempVotes))
                 return tempVotes
             })
-            localStorage.setItem('votes', JSON.stringify(localVotes))
+            
             setUserVote(vote)
-
         } 
     }
 

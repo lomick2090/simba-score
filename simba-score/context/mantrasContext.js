@@ -9,6 +9,7 @@ function MantrasProvider({children}) {
   const [mantras, setMantras] = React.useState([])
   const [localVotes, setLocalVotes] = React.useState([])
 
+  
   React.useEffect(() => {
     async function initialize() {
         const rawMantraData = await getDocs(mantraRef)
