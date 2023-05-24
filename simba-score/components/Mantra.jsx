@@ -10,8 +10,6 @@ export default function Mantra({mantra, index}) {
     const [userVote, setUserVote] = useState(0)
     const {localVotes, setLocalVotes, mantras} = useMantraContext()
 
-    console.log(localVotes[index])
-
     useEffect(() => {
         setUserVote(localVotes[index] || 0)
     }, [localVotes[index]])

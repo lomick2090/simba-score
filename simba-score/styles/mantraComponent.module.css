@@ -1,8 +1,9 @@
 .mantra {
     border: 1px solid rgba(0, 0, 0, 0.329);
     padding: 12px;
-    max-width: 250px;
+    width: 250px;
     border-radius: 20px;
+    text-align: center;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.027) , rgba(0, 0, 0, 0.315));
     box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.384)
 }
