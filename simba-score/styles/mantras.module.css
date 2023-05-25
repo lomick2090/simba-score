@@ -58,12 +58,12 @@
 .mantras {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 250px 250px 250px 250px 250px 250px 250px;
   align-items: center;
   justify-items: center;
 }
 
 .buttons {
-  grid-column: 0 / 4;
-  justify-self: center;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
 }

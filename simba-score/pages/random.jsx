@@ -6,7 +6,7 @@ import styles from '../styles/mantras.module.css'
 
 export default function Random() {
     const [rando, setRando] = useState()
-    const {mantras, localVotes} = useMantraContext()
+    const {mantras} = useMantraContext()
 
     useEffect(() => {
         setRando(Math.floor(Math.random()*mantras.length))
@@ -24,7 +24,7 @@ export default function Random() {
 
                 <Mantra mantra={randoMantra} index={rando} />
 
-                <button onClick={getRandom}>Get Random</button>
+                <button className={styles.mantrabuttons} onClick={getRandom}>Get Random</button>
             </div>
         </Layout>
     )

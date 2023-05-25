@@ -38,6 +38,11 @@ export default function Mantras() {
         )
     })
 
+    const rows = Math.ceil((sortedMantras?.length + 1)/4)
+    const rowStyle = {
+        gridTemplateRows: `repeat(${rows}, 250px)`
+    }
+
     const mantraButtons = mantraTags.map(tag => {
         return (
             <div>
@@ -71,12 +76,18 @@ export default function Mantras() {
                     
                     :
 
-                    <div className={styles.mantras}>
+                    <div>
                         <div className={styles.buttons}>
                             {mantraButtons}
                         </div>
-                        {mantraElements}
-                        <button className={styles.mantrabuttons} onClick={() => handleTagClick('')}>Back</button>
+                        <div
+                            className={styles.mantras}
+                            style={rowStyle}
+                        >
+
+                            {mantraElements}
+                            <button className={styles.mantrabuttons} onClick={() => handleTagClick('')}>Back</button>
+                        </div>
                     </div>
                 }
             </div>
