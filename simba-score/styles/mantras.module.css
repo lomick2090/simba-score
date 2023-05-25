@@ -32,7 +32,8 @@
   touch-action: manipulation;
   vertical-align: top;
   white-space: nowrap;
-  margin-bottom:30px
+  margin-bottom:30px;
+  align-self:center;
 }
 
 .mantrabuttons:active,
@@ -56,10 +57,11 @@
 }
 
 .mantras {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  align-items: center;
-  justify-items: center;
+  display: flex;
+  gap: 150px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 8vw;
 }
 
 .buttons {

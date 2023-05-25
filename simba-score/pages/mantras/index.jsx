@@ -38,21 +38,16 @@ export default function Mantras() {
         )
     })
 
-    const rows = Math.ceil((sortedMantras?.length + 1)/4)
-    const rowStyle = {
-        gridTemplateRows: `repeat(${rows}, 250px)`
-    }
-
     const mantraButtons = mantraTags.map(tag => {
         return (
-            <div>
+            <div key={tag} >
                 {
                     (pickedCategory == '' || pickedCategory == tag)
 
                     &&
 
                     <button 
-                        key={tag} 
+                        
                         className={styles.mantrabuttons}
                         onClick={() => handleTagClick(tag)}
                     >
@@ -82,7 +77,6 @@ export default function Mantras() {
                         </div>
                         <div
                             className={styles.mantras}
-                            style={rowStyle}
                         >
 
                             {mantraElements}
