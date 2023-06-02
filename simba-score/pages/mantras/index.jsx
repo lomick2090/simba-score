@@ -18,7 +18,6 @@ export default function Mantras() {
         })
     })
     let mantraTags = [... new Set(rawMantraTags)]
-    console.log(i)
 
     function handleTagClick(tag) {
         if (pickedCategory) {

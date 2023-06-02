@@ -13,6 +13,9 @@ export default function Layout({children}) {
                     <Link href='/mantras'>
                         <li>Mantras</li>
                     </Link>
+                    <Link href='/peptalks'>
+                        <li>Pep Talks</li>
+                    </Link>
                     <Link href='leaderboard'>
                         <li>Leaderboard</li>
                     </Link>
