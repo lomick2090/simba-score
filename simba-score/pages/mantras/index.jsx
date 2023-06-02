@@ -10,12 +10,15 @@ export default function Mantras() {
     const {mantras} = useMantraContext()
     const shallowMantras = [...mantras]
     let rawMantraTags = []
+    let i = 0
     mantras.map(mantra => {
+        i++
         mantra.tags.map(tag => {
             rawMantraTags.push(tag)
         })
     })
     let mantraTags = [... new Set(rawMantraTags)]
+    console.log(i)
 
     function handleTagClick(tag) {
         if (pickedCategory) {
