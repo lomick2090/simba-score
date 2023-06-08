@@ -2,6 +2,11 @@ import { AudioRecorder } from 'react-audio-voice-recorder';
 import Layout from '../../components/Layout';
 import styles from '../../styles/mantras.module.css'
 import { useMantraContext } from '../../context/mantrasContext';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from '../../config/firebase'
+import { useState } from 'react';
+import { uuidv4 } from '@firebase/util';
+import { doc, setDoc } from "firebase/firestore";
 
 const addAudioElement = (blob) => {
   const url = URL.createObjectURL(blob);
@@ -13,6 +18,52 @@ const addAudioElement = (blob) => {
 
 export default function Record() {
     const {mantras} = useMantraContext()
+    const [input, setInput] = useState({
+        category: '',
+        file: ''
+    })
+
+    async function handleSubmit() {
+        let id = uuidv4()
+        let path
+        let pictureURL
+        try {
+            path =`peptalks/${id}`
+            const storageRef = ref(storage, path);
+            await uploadBytes(storageRef, input.file)
+            const imageRef = ref(storage, path)
+            pictureURL = await getDownloadURL(imageRef)
+            console.log(pictureURL)
+            await setDoc(doc(db, "peptalks", id), {
+                url: pictureURL,
+                category: input.category,
+                votes: 0
+            });
+        } catch (err){
+            console.log(err)
+        }
+
+    }
+
+    function handleChange(e) {
+        const {value, name, files} = e.target;
+        if (files) {
+            setInput(prevInput => {
+                return {
+                    ...prevInput,
+                    [name]: files[0]
+                }
+            }) 
+        } else {
+            setInput(prevInput => {
+                return {
+                    ...prevInput,
+                    [name]: value
+                }
+            })
+        }
+        console.log(input)
+    }
 
     let rawMantraTags = []
     let i = 0
@@ -54,13 +105,14 @@ export default function Record() {
                 <p>Hit the record button, then when you are done, hit the save icon on the left, then upload the file here:</p>
                 <br />
                 <div>
-                    <input type="file" accept="audio/mp3"/>
-                    <select name="category" id="category">
-                        <option value={null} selected >Choose Category</option>
+                    <input type="file" name="file" accept="audio/mp3" onChange={handleChange} />
+                    <select name="category" id="category" value={input.category} onChange={handleChange}>
+                        <option value={null} >Choose Category</option>
                         {mantraOptions}
                     </select>
                 </div>
-                <button>Submit</button>
+                <br />
+                <button className={styles.mantrabuttons} onClick={handleSubmit}>Submit</button>
 
             </div>
         </Layout>
