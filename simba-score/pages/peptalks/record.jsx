@@ -22,27 +22,41 @@ export default function Record() {
         category: '',
         file: ''
     })
+    const [didSubmit, setDidSubmit] = useState(false)
 
     async function handleSubmit() {
-        let id = uuidv4()
-        let path
-        let pictureURL
-        try {
-            path =`peptalks/${id}`
-            const storageRef = ref(storage, path);
-            await uploadBytes(storageRef, input.file)
-            const imageRef = ref(storage, path)
-            pictureURL = await getDownloadURL(imageRef)
-            console.log(pictureURL)
-            await setDoc(doc(db, "peptalks", id), {
-                url: pictureURL,
-                category: input.category,
-                votes: 0
-            });
-        } catch (err){
-            console.log(err)
+        if ((input.category && input.category != "Choose Category") && input.file) {
+            let id = uuidv4()
+            let path
+            let pictureURL
+            try {
+                path =`peptalks/${id}`
+                const storageRef = ref(storage, path);
+                await uploadBytes(storageRef, input.file)
+                const imageRef = ref(storage, path)
+                pictureURL = await getDownloadURL(imageRef)
+                console.log(pictureURL)
+                await setDoc(doc(db, "peptalks", id), {
+                    url: pictureURL,
+                    category: input.category,
+                    votes: 0
+                });
+                setDidSubmit(true)
+            } catch (err){
+                console.log(err)
+            }
+        } else {
+            alert('Please Fill Both Fields')
         }
 
+    }
+
+    function refresh() {
+        setDidSubmit(false);
+        setInput({
+            category: '',
+            file: ''
+        })
     }
 
     function handleChange(e) {
@@ -89,6 +103,19 @@ export default function Record() {
 
     return (
         <Layout>
+            {
+            didSubmit 
+            
+            ?
+
+            <div className={styles.page}>
+                <h1>Submitted!</h1>
+                <br />
+                <button className={styles.mantrabuttons} onClick={refresh}>Submit Another</button>
+            </div>
+
+            :
+
             <div className={styles.page}>
                 <h1>Record your own peptalk here:</h1>
                 <br />
@@ -115,6 +142,7 @@ export default function Record() {
                 <button className={styles.mantrabuttons} onClick={handleSubmit}>Submit</button>
 
             </div>
+            }
         </Layout>
     )
 }
