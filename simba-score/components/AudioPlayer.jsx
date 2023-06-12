@@ -48,14 +48,13 @@ class AudioPlayer extends React.Component {
           ref={this.audioRef}
           src={this.props.url}
           onTimeUpdate={this.handleTimeUpdate}
-          onEnded={this.handleNextTrack}
         />
         <div className={styles.audiobuttons}>
-          <button className={buttonStyle.mantrabuttons} onClick={this.handlePrevTrack}>Prev</button>
           <button  className={buttonStyle.mantrabuttons} onClick={playing ? this.handlePause : this.handlePlay}>
             {playing ? 'Pause' : 'Play'}
           </button>
         </div>
+        <p>Volume:</p>
         <div>
           <input
             type="range"

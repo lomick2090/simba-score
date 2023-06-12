@@ -1,11 +1,19 @@
-
-.audiomodule {
-    border: 1px solid black;
-    border-radius: 25px;
-    padding: 8px;
-}
-
 .audiobuttons {
     display: flex;
     justify-content: center;
+}
+
+.audiomodule {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.329);
+    padding: 12px;
+    width:250px;
+    border-radius: 20px;
+    text-align: center;
+    background-image: linear-gradient(to right, rgb(224, 224, 224) , rgb(168, 168, 168));
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.384);
+    flex: 0 0 auto;
+    align-self: center
 }
