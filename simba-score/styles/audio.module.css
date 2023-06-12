@@ -1,0 +1,11 @@
+
+.audiomodule {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 8px;
+}
+
+.audiobuttons {
+    display: flex;
+    justify-content: center;
+}

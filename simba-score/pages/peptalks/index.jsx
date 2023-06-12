@@ -3,57 +3,53 @@ import styles from "../../styles/mantras.module.css"
 import { useMantraContext } from "../../context/mantrasContext"
 import Link from "next/link"
 import { useState } from "react"
-import Mantra from "../../components/Mantra"
+import PepTalk from "../../components/PepTalk"
 
 export default function Mantras() {
     const [pickedCategory, setPickedCategory] = useState('')
-    const {mantras} = useMantraContext()
-    const shallowMantras = [...mantras]
-    let rawMantraTags = []
-    let i = 0
-    mantras.map(mantra => {
-        i++
-        mantra.tags.map(tag => {
-            rawMantraTags.push(tag)
-        })
+    const {pepTalks} = useMantraContext()
+    const shallowPepTalks = [...pepTalks]
+    let rawPepTags = []
+    pepTalks.map(pepTalk => {
+        rawPepTags.push(pepTalk.category)
     })
-    let mantraTags = [... new Set(rawMantraTags)]
+    let pepTags = [... new Set(rawPepTags)]
 
-    function handleTagClick(tag) {
+    function handleTagClick(category) {
         if (pickedCategory) {
             setPickedCategory('')
         } else { 
-            setPickedCategory(tag)
+            setPickedCategory(category)
         }
     }
 
-    const sortedMantras = shallowMantras.filter(mantra => {
+    const sortedPepTalks = shallowPepTalks.filter(pepTalk => {
         return (
-            ( pickedCategory == mantra.tags[0] || pickedCategory == mantra.tags[1] )
+            (pickedCategory == pepTalk.category)
         )
     })
 
-    const mantraElements = sortedMantras.map(mantra => {
-        const index = mantras.findIndex(ogMantra => {return ogMantra == mantra})
+    const pepElements = sortedPepTalks.map(pepTalk => {
+        const index = pepTalks.findIndex(ogPepTalk => {return ogPepTalk == pepTalk})
         return (
-            <Mantra key={mantra.id} mantra={mantra} index={index}/>
+            <PepTalk key={pepTalk.id} pepTalk={pepTalk} index={index}/>
         )
     })
 
-    const mantraButtons = mantraTags.map(tag => {
+    const pepButtons = pepTags.map(category => {
         return (
-            <div key={tag} >
+            <div key={category} >
                 {
-                    (pickedCategory == '' || pickedCategory == tag)
+                    (pickedCategory == '' || pickedCategory == category)
 
                     &&
 
                     <button 
                         
                         className={styles.mantrabuttons}
-                        onClick={() => handleTagClick(tag)}
+                        onClick={() => handleTagClick(category)}
                     >
-                        {tag}
+                        {category}
                     </button>
                 }
             </div>
@@ -67,7 +63,7 @@ export default function Mantras() {
                     (pickedCategory == '') ?
 
                     <div className={styles.page}>
-                        {mantraButtons}
+                        {pepButtons}
                         <Link href='/random'><button className={styles.mantrabuttons}>Random</button></Link>
                     </div>
                     
@@ -75,13 +71,13 @@ export default function Mantras() {
 
                     <div>
                         <div className={styles.buttons}>
-                            {mantraButtons}
+                            {pepButtons}
                         </div>
                         <div
                             className={styles.mantras}
                         >
 
-                            {mantraElements}
+                            {pepElements}
                             <button className={styles.mantrabuttons} onClick={() => handleTagClick('')}>Back</button>
                         </div>
                     </div>

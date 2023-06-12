@@ -4,31 +4,38 @@ import { getDocs, collection } from 'firebase/firestore';
 
 const MantrasContext = React.createContext()
 const mantraRef = collection(db, 'mantras');
+const pepRef = collection(db, 'peptalks')
 
 function MantrasProvider({children}) {
   const [mantras, setMantras] = React.useState([])
+  const [pepTalks, setPepTalks] = React.useState([])
   const [localVotes, setLocalVotes] = React.useState([])
 
   
   React.useEffect(() => {
     async function initialize() {
-        const rawMantraData = await getDocs(mantraRef)
-        const mantraList = rawMantraData.docs.map(mantra => ({...mantra.data(), id: mantra.id}))
-        setMantras(mantraList);
+      const rawMantraData = await getDocs(mantraRef)
+      const mantraList = rawMantraData.docs.map(mantra => ({...mantra.data(), id: mantra.id}))
+      setMantras(mantraList);
 
-        if (!localStorage.getItem('votes')) {
-            const initialVotes = mantraList.map(() => ( 0 ))
-            localStorage.setItem('votes', JSON.stringify(initialVotes))
-            setLocalVotes(initialVotes)
-        } else {
-            setLocalVotes(JSON.parse(localStorage.getItem('votes')))
-        }
+      if (!localStorage.getItem('votes')) {
+          const initialVotes = mantraList.map(() => ( 0 ))
+          localStorage.setItem('votes', JSON.stringify(initialVotes))
+          setLocalVotes(initialVotes)
+      } else {
+          setLocalVotes(JSON.parse(localStorage.getItem('votes')))
+      }
+
+      const rawPepTalkData = await getDocs(pepRef)
+      const pepTalkList = rawPepTalkData.docs.map(peptalk => ({...peptalk.data(), id: peptalk.id}))
+      setPepTalks(pepTalkList)
+      
     }
 
     initialize()
   }, [])
 
-  return <MantrasContext.Provider value={{mantras, localVotes, setLocalVotes}}>{children}</MantrasContext.Provider>
+  return <MantrasContext.Provider value={{mantras, localVotes, setLocalVotes, pepTalks}}>{children}</MantrasContext.Provider>
 }
 
 function useMantraContext() {
@@ -39,4 +46,4 @@ function useMantraContext() {
   return context
 }
 
-export {MantrasProvider, useMantraContext}
+export {MantrasProvider, useMantraContext} 
