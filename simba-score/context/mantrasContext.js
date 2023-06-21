@@ -33,7 +33,7 @@ function MantrasProvider({children}) {
     }
 
     initialize()
-  }, [])
+  },  [])
 
   return <MantrasContext.Provider value={{mantras, localVotes, setLocalVotes, pepTalks}}>{children}</MantrasContext.Provider>
 }
